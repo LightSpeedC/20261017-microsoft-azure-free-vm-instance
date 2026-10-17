@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Azure 無料 VM 作成計画</title>
+<style>
+:root{--navy1:#12224d;--navy2:#2f5fbf;--ink:#1c2330;--line:#d9dfe8;--accent:#12224d;--accent2:#2f5fbf;--soft:#f2f5fb;}
+body{margin:0;background:#fff;color:var(--ink,#1c2330);font-size:15.5px;line-height:1.85;font-family:sans-serif;}
+.titlebar{background:linear-gradient(135deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));color:#fff;padding:34px 30px 30px;}
+.titlebar h1{font-size:1.6em;margin:0;color:#fff;}
+.titlebar .lead{font-size:.9em;color:#dfe8ff;}
+.titlebar .date{font-size:.85em;color:#dfe8ff;}
+.wrap{max-width:1600px;margin:0 auto;padding:0 30px 40px;}
+.backlink{margin:18px 0 0;}
+footer .backlink{margin:18px 0 0;}
+a.back-home{display:inline-block;padding:0 9px;border-radius:6px;background:linear-gradient(100deg,var(--navy1,#12224d),var(--navy2,#2f5fbf));color:#fff;text-decoration:none;}
+a.back-home svg{vertical-align:-3px;}
+a{color:#1a4fa0;background:transparent;}
+section h1{background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));color:#fff;padding:14px 20px;margin:26px 0 20px;border-radius:8px;font-size:1.3em;}
+section{background:linear-gradient(180deg,var(--soft,#f2f5fb),#fff);color:#1c2330;padding:4px 26px 26px;margin:34px 0;}
+section.ch01{--accent:hsl(280,78%,25%);--accent2:hsl(280,58%,55%);--soft:hsl(280,28%,95%);}
+section.ch02{--accent:hsl(224,78%,25%);--accent2:hsl(224,58%,55%);--soft:hsl(224,28%,95%);}
+section.ch03{--accent:hsl(168,78%,25%);--accent2:hsl(168,58%,55%);--soft:hsl(168,28%,95%);}
+section.ch04{--accent:hsl(112,78%,25%);--accent2:hsl(112,58%,55%);--soft:hsl(112,28%,95%);}
+section.ch05{--accent:hsl(56,78%,25%);--accent2:hsl(56,58%,55%);--soft:hsl(56,28%,95%);}
+section.ch06{--accent:hsl(0,78%,25%);--accent2:hsl(0,58%,55%);--soft:hsl(0,28%,95%);}
+.tablewrap{overflow-x:auto;}
+table{border-collapse:separate;border-spacing:0;width:100%;border-radius:8px;overflow:hidden;border:1px solid var(--line,#d9dfe8);box-shadow:0 1px 3px rgba(0,0,0,.08);}
+th{background:linear-gradient(100deg,var(--accent,#12224d),var(--accent2,#2f5fbf));color:#fff;padding:9px 12px;text-align:left;}
+td{padding:9px 12px;vertical-align:top;background:#fff;color:#1c2330;border-top:1px solid var(--line,#d9dfe8);}
+tr:nth-child(even) td{background:#fafbfe;}
+code{background:#f4f6fa;border:1px solid var(--line,#d9dfe8);color:#17335f;padding:0 4px;border-radius:4px;}
+.callout{border-left:6px solid var(--accent,#12224d);background:linear-gradient(180deg,var(--soft,#f2f5fb),#fff);color:#1c2330;padding:6px 16px;border-radius:0 8px 8px 0;}
+.callout strong{color:var(--accent,#12224d);}
+footer.wrap{padding-top:0;}
+</style>
+</head>
+<body>
+<div class="titlebar"><div class="inner">
+<h1>Azure 無料 VM 作成計画</h1>
+<div class="lead">Microsoft Azure の無料アカウント特典で Linux VM を 1 台作り、SSH で入れる状態にする計画。永久無料の VM との比較も載せる。</div>
+<div class="date">📅 作成: 2026-10-17 / 更新: 2026-10-17</div>
+</div></div>
+<div class="wrap">
+<p class="backlink"><a class="back-home" href="../" title="親へ戻る"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8 8 2l6 6M4 7v7h8V7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a></p>
+
+<section class="ch01" id="ch01">
+<h1>目的と前提</h1>
+<p>Azure の無料アカウント特典で、Linux の仮想マシン（VM）を 1 台作る。</p>
+<div class="tablewrap"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>無料枠</td><td>B1s・B2pts v2（Arm）・B2ats v2（AMD）のいずれかを月 750 時間。<strong>12 か月限定</strong>（常時無料ではない）</td></tr>
+<tr><td>クレジット</td><td>登録後 30 日間 $200。30 日以内か使い切りで従量課金へ切替えると、12 か月の無料枠が続く</td></tr>
+<tr><td>登録条件</td><td>電話番号・クレジットカード（プリペイド不可）・Microsoft または GitHub アカウント。新規顧客のみ（過去に Azure の無料登録をしていると特典を受けられない可能性がある）</td></tr>
+<tr><td>12 か月後</td><td>動いている VM は止まらず、従量課金になる</td></tr>
+</tbody></table></div>
+<div class="callout"><p><strong>未確認</strong>: 上は Microsoft の無料アカウント FAQ・料金ページの要約に基づく。ディスク・帯域の無料量、地域ごとのサイズ在庫は公式ページで確かめていない。作成前にポータルの表示で確かめる。</p></div>
+</section>
+
+<section class="ch02" id="ch02">
+<h1>永久無料の VM はあるか</h1>
+<p><strong>Azure の VM に、常時無料（永久無料）はない。</strong>無料なのは 12 か月間だけ。Azure には常時無料のサービスが 65 以上あるが、公式で確認できた Linux VM の無料枠は 12 か月の特典だけ。Azure の常時無料サービスの一覧そのものは読めていない。</p>
+<p>他社には永久無料の VM 枠がある。検索結果の一部は古い情報や個人の解説なので、数値は公式ページで確かめる。</p>
+<div class="tablewrap"><table><thead><tr><th>事業者</th><th>永久無料の VM</th><th>注意</th></tr></thead><tbody>
+<tr><td>Oracle Cloud</td><td>Arm の A1.Flex で最大 4 OCPU・24 GB。x86 の Micro を 2 台</td><td>公式は 3,000 OCPU 時間・18,000 GB 時間と書くが、別の解説は半分の値を挙げていて食い違う。Arm は在庫不足で作れないことがある</td></tr>
+<tr><td>Google Cloud</td><td>e2-micro を 1 台（メモリ 1 GB、ディスク 30 GB）</td><td>米国の一部リージョン（us-central1・us-west1・us-east1）だけ。日本からは遅延が大きい</td></tr>
+</tbody></table></div>
+<p>Azure にこだわる理由が無ければ、永久無料なら Oracle Cloud が現実的。Azure でなければならないなら、次章以降の計画で 12 か月使う。</p>
+</section>
+
+<section class="ch03" id="ch03">
+<h1>決めること</h1>
+<div class="tablewrap"><table><thead><tr><th>番号</th><th>案</th><th>理由</th></tr></thead><tbody>
+<tr><td>1-A（推奨）</td><td>Ubuntu 24.04 LTS ＋ B2ats v2（x64）</td><td>x64 なので互換性の問題が少ない。迷う点が無い</td></tr>
+<tr><td>1-B</td><td>Ubuntu ＋ B2pts v2（Arm）</td><td>Arm 用ビルドが必要。使うソフトが Arm 対応か確認が要る</td></tr>
+<tr><td>1-C</td><td>Windows Server ＋ B2ats v2</td><td>RDP で使える。メモリ 1 GB 級では重い</td></tr>
+<tr><td>2-A（推奨）</td><td>操作は Azure CLI（<code>az</code>）</td><td>手順が再現でき、削除も 1 コマンドで済む</td></tr>
+<tr><td>2-B</td><td>操作は Azure ポータル</td><td>画面で無料枠の表示を確かめながら作れる</td></tr>
+<tr><td>3-A（推奨）</td><td>リージョンは Japan East（無ければ Southeast Asia）</td><td>日本から近い。サイズの在庫はリージョンで違うため、在庫の確認が要る</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="ch04" id="ch04">
+<h1>手順</h1>
+<ol>
+<li><strong>アカウント登録</strong>: 無料アカウントを作る（本人の操作。カード情報は AI に渡さない）</li>
+<li><strong>予算アラートの設定</strong>: Cost Management で予算（例: 月 $1）とメール通知を先に作る</li>
+<li><strong>CLI の準備</strong>: <code>az login</code> は本人が実行する。<code>az account show</code> で契約を確認</li>
+<li><strong>サイズの在庫確認</strong>: <code>az vm list-skus --location japaneast --size Standard_B2ats_v2 --output table</code></li>
+<li><strong>リソースグループ作成</strong>: 削除を 1 回で済ませるため、VM 関連はすべて 1 グループに入れる</li>
+<li><strong>VM 作成</strong>: Ubuntu・SSH 鍵認証のみ（パスワード無効）・ディスクは標準 SSD（無料枠内の容量）・パブリック IP は Standard SKU</li>
+<li><strong>NSG</strong>: 受信は SSH（22）だけを、自分のグローバル IP からに限定</li>
+<li><strong>接続確認</strong>: <code>ssh</code> で入り、<code>uname -a</code> と <code>df -h</code> を確かめる</li>
+<li><strong>課金の確認</strong>: 翌日にコスト分析を見て、VM 以外（IP・ディスク）で課金が出ていないか確かめる</li>
+</ol>
+<div class="callout"><p><strong>コマンドの値（サブスクリプション ID・IP アドレス・鍵の場所）は、実行時に決める</strong>。この資料には書かない。</p></div>
+</section>
+
+<section class="ch05" id="ch05">
+<h1>課金の落とし穴と後始末</h1>
+<ul>
+<li><strong>停止（OS から shutdown）では VM の課金が止まらない</strong>。止めるなら「割り当て解除」（<code>az vm deallocate</code>）。ただし 750 時間は 1 台を 24 時間動かしても 744 時間で収まる</li>
+<li>2 台目や、無料枠にない大きなサイズを作ると、その分が課金される</li>
+<li>パブリック IP・ディスクは、VM を消しても残ることがある。リソースグループごと消す（<code>az group delete</code>）のが確実</li>
+<li>無料枠が切れる日（登録日 + 12 か月）をカレンダーに入れ、その前に削除するか継続を判断する</li>
+</ul>
+</section>
+
+<section class="ch06" id="sources">
+<h1>参考</h1>
+<ul>
+<li><a href="https://azure.microsoft.com/free/free-account-faq">Azure free account FAQ</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/free-services">Azure free services</a></li>
+<li><a href="https://docs.oracle.com/en-us/iaas/Content/FreeTier/resourceref.htm">Always Free Resources (Oracle)</a></li>
+<li><a href="https://www.samnet.dev/learn/guides/free-vps-guide/">free vps guide</a></li>
+</ul>
+</section>
+
+</div>
+<footer class="wrap">
+<p class="backlink"><a class="back-home" href="../" title="親へ戻る"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8 8 2l6 6M4 7v7h8V7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></a></p>
+</footer>
+</body>
+</html>
